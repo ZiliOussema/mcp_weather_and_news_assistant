@@ -1,0 +1,52 @@
+# Git ignore patterns - files are ignored before directories
+# This ensures proper pattern matching according to gitignore specifications
+
+# Environment files
+.env
+.env.local
+.env*.local
+
+# Virtual environment
+.env/
+.venv/
+venv/
+
+# Python cache and compiled files
+*.py[cod]
+*$py.class
+__pycache__/
+
+# IDE specific files
+*.swp
+*.swo
+.idea/
+.vscode/
+
+# Build and distribution files
+*.egg-info/
+build/
+dist/
+
+# Logs and databases
+*.log
+*.sqlite
+*.db
+
+# OS generated files
+.DS_Store
+.DS_Store?
+.Spotlight-V100
+.Trashes
+ehthumbs.db
+Thumbs.db
+
+# Test and coverage files
+.coverage
+*.cover
+.htmlcov/
+.tox/
+
+# Personal settings
+*.tmproj
+*.sublime-project
+*.sublime-workspace
