@@ -14,7 +14,7 @@ def get_weather(city: str) -> dict:
         dict: Weather data including temperature, humidity, wind speed and description.
     """  
     api_key = os.getenv("OPENWEATHER_API_KEY")  
-    base_url = "http://api.openweathermap.org/data/2.5/weather"  
+    base_url = "https://api.openweathermap.org/data/2.5/weather"  
     params = {  
         "q": city,  
         "appid": api_key,  

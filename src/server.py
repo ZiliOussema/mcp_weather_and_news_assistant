@@ -4,11 +4,15 @@
 ####################################################################################################################
 
 import os  
-from  dotenv  import  load_dotenv  
+from  dotenv  import  load_dotenv
+import logging  
 
 from mcp.server.fastmcp import FastMCP
 from tools.weather import get_weather 
 from tools.news import get_news 
+
+# Configure logging
+logging.basicConfig(level=logging.INFO) 
 
 # Load environment variables from .env file 
 load_dotenv()  
@@ -24,6 +28,7 @@ def weather(city: str) -> dict:
     Returns:
         dict: Weather data including temperature, humidity, wind speed and description.
     """
+    logging.info(f"Fetching weather data for city: {city}")
     return get_weather(city)
 
 
@@ -35,7 +40,9 @@ def news(topic: str) -> dict:
     Returns:
         dict: News data including headlines and descriptions.
     """  
+    logging.info(f"Fetching news for topic: {topic}") 
     return get_news(topic)
 
 if __name__ == "__main__":  
+    logging.info("Starting Weather and News Assistant MCP server...")
     mcp.run()  
