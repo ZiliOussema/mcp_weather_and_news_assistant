@@ -14,6 +14,10 @@ def get_news(topic: str) -> dict:
         dict: News data including headlines and descriptions.
     """  
     api_key = os.getenv("NEWS_API_KEY")  
+    
+    if not api_key:  
+        raise Exception("NEWS_API_KEY environment variable not set") 
+    
     base_url = "https://newsapi.org/v2/everything"
     params = {
         "q": topic,

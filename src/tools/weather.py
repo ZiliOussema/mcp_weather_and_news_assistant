@@ -10,10 +10,14 @@ def get_weather(city: str) -> dict:
     """Fetch weather data for a given city using OpenWeatherMap API.
     Args:  
         city (str): Name of the city to fetch weather for.
-        Returns:
+    Returns:
         dict: Weather data including temperature, humidity, wind speed and description.
     """  
-    api_key = os.getenv("OPENWEATHER_API_KEY")  
+    api_key = os.getenv("OPENWEATHER_API_KEY") 
+    
+    if not api_key:  
+        raise Exception("OPENWEATHER_API_KEY environment variable not set")
+     
     base_url = "https://api.openweathermap.org/data/2.5/weather"  
     params = {  
         "q": city,  
