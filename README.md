@@ -59,7 +59,16 @@ pip install -r requirements.txt
 
 ### 4. Set Up Environment Variables
 
-Create a `.env` file in the project root:
+Create a `.env` file in the project root (you can copy from `.env.sample`):
+
+```bash
+# Copy the sample file
+cp .env.sample .env
+
+# Then edit .env and add your API keys
+```
+
+Your `.env` file should contain:
 
 ```bash
 OPENWEATHER_API_KEY=your_openweather_api_key_here
@@ -113,10 +122,11 @@ Path: `%APPDATA%\Claude\claude_desktop_config.json`
 {
   "mcpServers": {
     "weather-news": {
-      "command": "C:\\path\\to\\your\\project\\mcp_weather_and_news_assistant\\venv\\Scripts\\python.exe",
+      "command": "C:\\path\\to\\your\\project\\venv\\Scripts\\python.exe",
       "args": [
-        "C:\\path\\to\\your\\project\\mcp_weather_and_news_assistant\\server.py"
-      ]
+        "src/server.py"
+      ],
+      "cwd": "C:\\path\\to\\your\\project"
     }
   }
 }
@@ -169,8 +179,9 @@ Add:
     "weather-news": {
       "command": "/Users/YOUR_USERNAME/mcp_weather_and_news_assistant/venv/bin/python",
       "args": [
-        "/Users/YOUR_USERNAME/mcp_weather_and_news_assistant/server.py"
-      ]
+        "src/server.py"
+      ],
+      "cwd": "/Users/YOUR_USERNAME/mcp_weather_and_news_assistant"
     }
   }
 }
@@ -208,8 +219,9 @@ Add:
     "weather-news": {
       "command": "/home/YOUR_USERNAME/mcp_weather_and_news_assistant/venv/bin/python",
       "args": [
-        "/home/YOUR_USERNAME/mcp_weather_and_news_assistant/server.py"
-      ]
+        "src/server.py"
+      ],
+      "cwd": "/home/YOUR_USERNAME/mcp_weather_and_news_assistant"
     }
   }
 }
@@ -245,9 +257,10 @@ pkill claude
 ```yaml
 mcpServers:
   weather-news:
-    command: C:\path\to\your\project\mcp_weather_and_news_assistant\venv\Scripts\python.exe
+    command: C:\path\to\your\project\venv\Scripts\python.exe
     args:
-      - C:\path\to\your\project\mcp_weather_and_news_assistant\server.py
+      - src/server.py
+    cwd: C:\path\to\your\project
 ```
 
 **For macOS/Linux:**
@@ -257,7 +270,8 @@ mcpServers:
   weather-news:
     command: /Users/YOUR_USERNAME/mcp_weather_and_news_assistant/venv/bin/python
     args:
-      - /Users/YOUR_USERNAME/mcp_weather_and_news_assistant/server.py
+      - src/server.py
+    cwd: /Users/YOUR_USERNAME/mcp_weather_and_news_assistant
 ```
 
 **Step 4:** Reload VS Code
@@ -304,10 +318,11 @@ Or edit settings.json:
   "cline.mcpServers": [
     {
       "name": "weather-news",
-      "command": "C:\\path\\to\\your\\project\\mcp_weather_and_news_assistant\\venv\\Scripts\\python.exe",
+      "command": "C:\\path\\to\\your\\project\\venv\\Scripts\\python.exe",
       "args": [
-        "C:\\path\\to\\your\\project\\mcp_weather_and_news_assistant\\server.py"
-      ]
+        "src/server.py"
+      ],
+      "cwd": "C:\\path\\to\\your\\project"
     }
   ]
 }
@@ -376,10 +391,10 @@ User: What's the weather in London and any technology news?
 3. **Check Python path**
    ```bash
    # Windows
-   "C:\path\to\your\project\mcp_weather_and_news_assistant\venv\Scripts\python.exe" --version
+   "C:\path\to\your\project\venv\Scripts\python.exe" --version
    
    # macOS/Linux
-   /path/to/your/project/mcp_weather_and_news_assistant/venv/bin/python --version
+   /path/to/your/project/venv/bin/python --version
    ```
 
 4. **View Claude logs**
@@ -439,7 +454,7 @@ User: What's the weather in London and any technology news?
 
 3. **Test server manually**
    ```bash
-   python server.py
+   python src/server.py
    ```
 
 ---
@@ -456,28 +471,63 @@ chmod +x server.py
 
 ```
 mcp_weather_and_news_assistant/
-├── tools/
-│   ├── __init__.py
-│   ├── weather.py             # Weather tool implementation
-│   └── news.py                # News tool implementation
-├── server.py                  # Main MCP server entry point
+├── src/
+│   ├── __pycache__/           
+│   ├── tools/
+│   │   ├── __pycache__/      
+│   │   ├── __init__.py
+│   │   ├── news.py            # News tool implementation
+│   │   └── weather.py         # Weather tool implementation
+│   └── server.py              # Main MCP server entry point
+├── test/
+│   ├── interactive_test.py    # Interactive testing script
+│   └── test_tools.py          # Unit tests for tools
 ├── venv/                      # Virtual environment 
 ├── .env                       # Environment variables
+├── .env.sample                # Sample environment file
 ├── .gitignore
-├── requirements.txt
-└── README.md
+├── requirements.txt           # Python dependencies
+└── README.md                  # Documentation
 ```
 
 ---
 
 ## Testing the Server
 
+### Manual Testing
+
 ```bash
 # Activate environment
 source venv/bin/activate  # or venv\Scripts\activate on Windows
 
 # Run server
-python server.py
+python src/server.py
+```
+
+### Interactive Testing
+
+The project includes an interactive test script to verify your API keys and tools:
+
+```bash
+# Activate environment
+source venv/bin/activate  # or venv\Scripts\activate on Windows
+
+# Run interactive test
+python test/interactive_test.py
+```
+
+This will test both the weather and news tools with sample queries.
+
+### Unit Tests
+
+Run the unit tests to verify tool functionality:
+
+```bash
+# Run all tests
+python -m pytest test/
+
+# Run specific test file
+python test/test_tools.py
 ```
 
 ---
